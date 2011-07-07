@@ -45,13 +45,13 @@ class gitorious::services {
         enable => true,
         hasstatus => true,
         hasrestart => true,
-        require => File["/etc/init.d/git-daemon"],
+#        require => File["/etc/init.d/git-daemon"],
     }
 
     exec {"stompserver start &":
       command => "stompserver start &",
       cwd => "/root/",
-     require => Service["git-daemon"],
+#     require => Service["git-daemon"],
     }
 
     exec { "script/poller":
