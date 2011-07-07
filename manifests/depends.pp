@@ -74,9 +74,11 @@ class gitorious::gems {
 }
 
 class gitorious::source {
+	exec {
 		"git_pull_gitorious":
 			command => "git clone https://git.gitorious.org/gitorious/mainline.git gitorious",
 			cwd => "/var/www",
 			creates => "/var/www/gitorious",
 			timeout => "-1";
+	}
 }
