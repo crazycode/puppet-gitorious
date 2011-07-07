@@ -49,7 +49,7 @@ class gitorious::config {
         command => "rake ultrasphinx:bootstrap RAILS_ENV=production",
         cwd => "/var/www/gitorious/",
 #        require => [Notify["dependencies_done"], Exec["create_db"]],
-        notify => Service["httpd"],
+#        notify => Service["httpd"],
     }
 
 	exec { "Change_MySQL_server_root_password":
