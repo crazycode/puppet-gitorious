@@ -5,7 +5,7 @@ class gitorious::depends {
 }
 
 class gitorious::rpms {
-    $package_list = ["apg", "httpd-devel", "sqlite-devel", "libjpeg-devel", "readline-devel", "curl-devel", "pcre-devel", "zlib-devel", "openssl-devel", "libyaml-devel", "gcc", "gcc-c++", "autoconf", "automake", "mysql", "mysql-devel", "mysql-server", "git", "ruby-mysql", "djvulibre-devel", "jasper-devel", "libtool-ltdl-devel", "librsvg2-devel.$hardwaremodel", "OpenEXR-devel.$hardwaremodel", "graphviz-devel.$hardwaremodel", "ghostscript", "freetype-devel", "libpng-devel", "giflib-devel", "libwmf-devel", "libexif-devel", "libtiff-devel", 'sphinx']
+    $package_list = ["apg", "httpd-devel", "sqlite-devel", "libjpeg-devel", "readline-devel", "curl-devel", "pcre-devel", "zlib-devel", "openssl-devel", "libyaml-devel", "gcc", "gcc-c++", "autoconf", "automake", "git", "ruby-mysql", "djvulibre-devel", "jasper-devel", "libtool-ltdl-devel", "librsvg2-devel.$hardwaremodel", "OpenEXR-devel.$hardwaremodel", "graphviz-devel.$hardwaremodel", "ghostscript", "freetype-devel", "libpng-devel", "giflib-devel", "libwmf-devel", "libexif-devel", "libtiff-devel", 'sphinx']
 
 	package {
 		$package_list:
@@ -33,7 +33,7 @@ class gitorious::rpms {
 }
 
 class gitorious::gems {
-  $gems = ["mime-types", "chronic", "facter", "BlueCloth", "ruby-yadis", "ruby-openid", "rmagick", "geoip", "ultrasphinx", "rspec", "rspec-rails", "RedCloth", "daemons",  "diff-lcs", "highline", "fastthread", "hoe", "oauth","rack", "rake", "ruby-hmac", 'json']
+  $gems = ["mime-types", "chronic", "facter", "BlueCloth", "ruby-yadis", "ruby-openid", "rmagick", "geoip", "ultrasphinx", "rspec", "rspec-rails", "RedCloth", "daemons",  "diff-lcs", "highline", "fastthread", "hoe", "oauth","rack", "rake", "ruby-hmac", 'json', 'bundle', 'builder']
 
   package {
 	$gems:
