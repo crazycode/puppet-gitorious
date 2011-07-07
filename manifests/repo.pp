@@ -40,4 +40,5 @@ class gitorious::repo {
 			gpgkey => "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-inuits",
 			gpgcheck => 0,
 			require => File["inuits-gpg-key"];
+	}
 }
