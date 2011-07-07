@@ -1,6 +1,7 @@
 class gitorious::depends {
 	include gitorious::rpms
 	include gitorious::gems
+	include gitorious::source
 }
 
 class gitorious::rpms {
@@ -70,4 +71,12 @@ class gitorious::gems {
 		provider => gem,
 #		require => Package[$gems];
   }
+}
+
+class gitorious::source {
+		"git_pull_gitorious":
+			command => "git clone https://git.gitorious.org/gitorious/mainline.git gitorious",
+			cwd => "/var/www",
+			creates => "/var/www/gitorious",
+			timeout => "-1";
 }

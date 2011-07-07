@@ -1,12 +1,6 @@
 class gitorious::core {
 
 	exec {
-		"git_pull_gitorious":
-			command => "git clone http://git.gitorious.org/gitorious/mainline.git gitorious",
-			cwd => "/var/www",
-			creates => "/var/www/gitorious",
-			timeout => "-1";
-
 		'gitorious_chown':
 			command => 'chown -R git:git /var/www/gitorious',
 #			unless => 'if [[ `ls -l /var/www|grep gitorious|cut -d " " -f 3` == "git" ]]; then exit ;else exit ;fi',
