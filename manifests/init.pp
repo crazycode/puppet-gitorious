@@ -23,4 +23,5 @@ class gitorious {
 	include gitorious::services
 	include gitorious::user
 	include gitorious::utils
+	include gitorious::source
 }
