@@ -5,12 +5,6 @@ class system::services {
         hasstatus => true,
         hasrestart => true,
     }  
-
-	service { "mysqld":
-		ensure => "running",
-#		require => Package[$package_list],
-		enable => true,
-	}
 }
 
 
@@ -48,15 +42,15 @@ class gitorious::services {
 #        require => File["/etc/init.d/git-daemon"],
     }
 
-    exec {"stompserver start &":
-      command => "stompserver start &",
-      cwd => "/root/",
+#    exec {"stompserver start &":
+#      command => "stompserver start &",
+#      cwd => "/root/",
 #     require => Service["git-daemon"],
-    }
+#    }
 
-    exec { "script/poller":
-      command => "script/poller start",
-      cwd => "/var/www/gitorious",
+#    exec { "script/poller":
+#      command => "script/poller start",
+#      cwd => "/var/www/gitorious",
 #     require => [Service["git-daemon"], File["/var/www/gitorious/tmp/pids"]],
-    }
+#    }
 }
