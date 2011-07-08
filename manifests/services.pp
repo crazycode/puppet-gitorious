@@ -18,13 +18,13 @@ class gitorious::services {
         mode => 755,
     }
 
-    service {"git-ultrasphinx":
-        ensure => running,
-        enable => true,
-        hasstatus => true,
-        hasrestart => true,
+#    service {"git-ultrasphinx":
+#        ensure => running,
+#        enable => true,
+#        hasstatus => true,
+#        hasrestart => true,
 #       require => File["/etc/init.d/git-ultrasphinx"],
-    }
+#    }
 
     file {"/etc/init.d/git-daemon":
         source => "/var/www/gitorious/doc/templates/centos/git-ultrasphinx",
@@ -34,13 +34,13 @@ class gitorious::services {
         mode => 755,
     }
 
-    service {"git-daemon":
-        ensure => running,
-        enable => true,
-        hasstatus => true,
-        hasrestart => true,
+#    service {"git-daemon":
+#        ensure => running,
+#        enable => true,
+#        hasstatus => true,
+#        hasrestart => true,
 #        require => File["/etc/init.d/git-daemon"],
-    }
+#    }
 
 #    exec {"stompserver start &":
 #      command => "stompserver start &",
