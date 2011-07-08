@@ -3,9 +3,8 @@ class gitorious::core {
 	exec {
 		'gitorious_chown':
 			command => 'chown -R git:git /var/www/gitorious',
-#			unless => 'if [[ `ls -l /var/www|grep gitorious|cut -d " " -f 3` == "git" ]]; then exit ;else exit ;fi',
+			refreshonly => true,
 			subscribe => Exec['git_pull_gitorious'],
-#			require => Exec['git_pull_gitorious'];
 	}
 		
 	file { "/var/www/gitorious":
@@ -13,18 +12,15 @@ class gitorious::core {
 		owner => "git",
 		group => "git",
 #		recurse => true,
-#		require => Exec["git_pull_gitorious"]
 	}
 
 	file {"/usr/local/bin/gitorious":
 		target => "/var/www/gitorious/script/gitorious",
 		ensure => symlink,
-#		require => Exec["git_pull_gitorious"],
 	}
 
 	file {"/var/www/gitorious/public/.htaccess": 
 		ensure => absent,
-#		require => Exec["git_pull_gitorious"],
 	}
 
 	file {"/var/www/gitorious/log": 
@@ -32,7 +28,6 @@ class gitorious::core {
 		owner => "git",
 		group => "git",
 #		recurse => true,
-#		require => Exec["git_pull_gitorious"],
 	}
 
 	file {"/var/www/gitorious/tmp": 
@@ -40,7 +35,6 @@ class gitorious::core {
 		owner => "git",
 		group => "git",
 #		recurse => true,
-#		require => Exec["git_pull_gitorious"],
 	}
 
 	file {"/var/www/gitorious/tmp/tarballs": 
