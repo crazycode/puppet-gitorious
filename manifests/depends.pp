@@ -5,7 +5,34 @@ class gitorious::depends {
 }
 
 class gitorious::rpms {
-    $package_list = ["apg", "httpd-devel", "sqlite-devel", "libjpeg-devel", "readline-devel", "curl-devel", "pcre-devel", "zlib-devel", "openssl-devel", "libyaml-devel", "gcc", "gcc-c++", "autoconf", "automake", "git", "ruby-mysql", "djvulibre-devel", "jasper-devel", "libtool-ltdl-devel", "librsvg2-devel.$hardwaremodel", "OpenEXR-devel.$hardwaremodel", "graphviz-devel.$hardwaremodel", "ghostscript", "freetype-devel", "libpng-devel", "giflib-devel", "libwmf-devel", "libexif-devel", "libtiff-devel", 'sphinx']
+    $package_list = ["apg",
+					"sqlite-devel",
+					"libjpeg-devel",
+					"readline-devel",
+					"pcre-devel",
+					"zlib-devel",
+					"openssl-devel",
+					"libyaml-devel",
+					"gcc",
+					"gcc-c++",
+					"autoconf",
+					"automake",
+					"git",
+					"ruby-mysql",
+					"djvulibre-devel",
+					"jasper-devel",
+					"libtool-ltdl-devel",
+					"librsvg2-devel.$hardwaremodel",
+					"OpenEXR-devel.$hardwaremodel",
+					"graphviz-devel.$hardwaremodel",
+					"ghostscript",
+					"freetype-devel",
+					"libpng-devel",
+					"giflib-devel",
+					"libwmf-devel",
+					"libexif-devel",
+					"libtiff-devel",
+					'sphinx']
 
 	package {
 		$package_list:
@@ -29,6 +56,16 @@ class gitorious::rpms {
 			name => "ImageMagick-devel.$hardwaremodel",
 			ensure => latest,
 			require => Package["imagemagick"];
+
+		'curl-devel':
+			ensure => present;
+			name => $operatingsystem ? {
+				Centos => $operatingsystemrelease ? {
+					'6.0' => 'libcurl-devel',
+					'*' => 'curl-devel',
+				},
+				'*' => 'curl-devel',
+			};
 	}
 }
 
