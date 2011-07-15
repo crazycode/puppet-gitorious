@@ -1,5 +1,5 @@
 class gitorious::repo {
-    file {
+    @file {
 		"dag-gpg-key":
 			ensure => present,
 			path => "/etc/pki/rpm-gpg/RPM-GPG-KEY-rpmforge-dag",
@@ -15,11 +15,14 @@ class gitorious::repo {
 			group => root;
     }
 
-    yumrepo {
-		"DAG":
-			descr => "RPMforge.net - dag",
+    @yumrepo {
+		"rpmforge":
+			descr => "rpmforge",
 			baseurl => absent,
-			mirrorlist => "http://apt.sw.be/redhat/el5/en/mirrors-rpmforge",
+			mirrorlist => $operatingsystemrelease ? {
+				'5.*' => "http://apt.sw.be/redhat/el5/en/mirrors-rpmforge",
+				'6.0' => "http://apt.sw.be/redhat/el6/en/mirrors-rpmforge",
+			},
 			enabled => 1,
 			gpgkey => "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rpmforge-dag",
 			gpgcheck => 1,
@@ -36,9 +39,19 @@ class gitorious::repo {
 		"inuits":
 			descr => "Inuits internal repo",
 			enabled => 1,
-			baseurl => "http://repo.inuits.be/centos/5/os",
+			baseurl => $operatingsystemrelease ? {
+				'5.*' => "http://repo.inuits.be/centos/5/os",
+				'6.0' => "http://repo.inuits.be/centos/6/os",
+			},
 			gpgkey => "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-inuits",
 			gpgcheck => 0,
 			require => File["inuits-gpg-key"];
+	}
+
+	if $operatingsystem == 'Centos' {
+		if $operatingsystemrelease != '6.0' {
+			realize('centosplus')
+		}
+		realize(File['dag-gpg-key', 'inuits-gpg-key'], Yumrepo['rpmforge', 'inuits'])
 	}
 }
