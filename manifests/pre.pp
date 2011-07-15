@@ -1,6 +1,10 @@
 class gitorious::pre {
     exec {
-		"yum-update":
+		'gem update':
+			command => 'gem update',
+			onlyif => 'which gem';
+
+		'yum update':
 	        command => "yum -y update",
 	        cwd => "/root/",
 	        refreshonly => true,
