@@ -4,6 +4,13 @@ class system::services {
         enable => true,
         hasstatus => true,
         hasrestart => true,
+		name => $operatingsystem ? {
+			Centos => $operatingsystemrelease ? {
+				'6.0' => 'postfix',
+				'*' => 'sendmail',
+			},
+			'*' => 'sendmail',
+		},
     }  
 }
 
