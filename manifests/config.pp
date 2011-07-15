@@ -43,14 +43,13 @@ class gitorious::config {
 		"bootstrap_sphinx":
 			command => "rake ultrasphinx:bootstrap RAILS_ENV=production",
 			cwd => "/var/www/gitorious/",
-			require => [Notify["dependencies_done"], Exec["create_db"]],
+			require => Exec["create_db"],
 			notify => Service["httpd"];
 */
 		"ldconfig":
 			command => "ldconfig",
 			cwd => "/root/",
 			refreshonly => true,
-			require => Package[$package_list],
 			subscribe => [File["/etc/ld.so.conf.d/gitorious.conf"]];
 	}
 
