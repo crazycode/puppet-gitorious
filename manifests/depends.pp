@@ -21,7 +21,6 @@ class gitorious::rpms {
 					"ruby-mysql",
 					"djvulibre-devel",
 					"jasper-devel",
-					"libtool-ltdl-devel",
 					"librsvg2-devel.$hardwaremodel",
 					"OpenEXR-devel.$hardwaremodel",
 					"graphviz-devel.$hardwaremodel",
@@ -58,19 +57,51 @@ class gitorious::rpms {
 			require => Package["imagemagick"];
 
 		'curl-devel':
-			ensure => present;
+			ensure => present,
 			name => $operatingsystem ? {
-				Centos => $operatingsystemrelease ? {
+				'Centos' => $operatingsystemrelease ? {
 					'6.0' => 'libcurl-devel',
 					'*' => 'curl-devel',
 				},
 				'*' => 'curl-devel',
 			};
 	}
+
+	@package {
+		"libtool-ltdl-devel":
+			ensure => present,
+	}
+
+	if $operatingsystemrelease != '6.0' {
+		realize(Package['libtool-ltdl-devel'])
+	}
 }
 
 class gitorious::gems {
-  $gems = ["mime-types", "chronic", "facter", "BlueCloth", "ruby-yadis", "ruby-openid", "rmagick", "geoip", "ultrasphinx", "rspec", "rspec-rails", "RedCloth", "daemons",  "diff-lcs", "highline", "fastthread", "hoe", "oauth","rack", "rake", "ruby-hmac", 'json', 'bundle', 'builder']
+  $gems = ["mime-types",
+			"chronic",
+			"facter",
+			"BlueCloth",
+			"ruby-yadis",
+			"ruby-openid",
+			"rmagick",
+			"geoip",
+			"ultrasphinx",
+			"rspec",
+			"rspec-rails",
+			"RedCloth",
+			"daemons",
+			"diff-lcs",
+			"highline",
+			"fastthread",
+			"hoe",
+			"oauth",
+			"rack",
+			"rake",
+			"ruby-hmac",
+			'json',
+			'bundle',
+			'builder']
 
   package {
 	$gems:
