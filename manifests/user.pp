@@ -1,8 +1,4 @@
 class gitorious::user {
-  package {"ruby-shadow":
-    ensure => installed,
-  }
-
   user { "git":
         ensure  => "present",
         comment => "Gitorious user",
@@ -10,23 +6,22 @@ class gitorious::user {
         shell   => "/bin/bash",
         managehome => true,
         password => '$1$5dZQgQSq$POqlSWnuiYZ7d1VXfgXGo.',
-        require => Package["ruby-shadow"]
     }
 
-    file { "/home/git/.ssh":
-        ensure => directory,
-        owner => "git",
-        group => "git",
-        mode => 700,
-        require => User["git"]
-    }
+    file {
+		"/home/git/.ssh":
+			ensure => directory,
+			owner => "git",
+			group => "git",
+			mode => 700,
+			require => User["git"];
 
-    file {"/home/git/.ssh/authorized_keys":
-        ensure => present,
-        owner => git,
-        group => git,
-        mode => 600,
-        require => File["/home/git/.ssh"],
+		"/home/git/.ssh/authorized_keys":
+			ensure => present,
+			owner => git,
+			group => git,
+			mode => 600,
+			require => File["/home/git/.ssh"];
     }
 
 #    line {"export RUBY_HOME=/opt/ruby-enterprise":
