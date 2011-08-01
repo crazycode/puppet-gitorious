@@ -17,47 +17,49 @@ class system::services {
 
 class gitorious::services {
 
-    file {"/etc/init.d/git-ultrasphinx":
-        source => "/var/www/gitorious/doc/templates/centos/git-ultrasphinx",
-        ensure => present,
-        owner => "root",
-        group => "root",
-        mode => 755,
+    file {
+		"/etc/init.d/git-ultrasphinx":
+			ensure => present,
+			owner => "root",
+			group => "root",
+			mode => 755;
+#			content => "/var/www/gitorious/doc/templates/centos/git-ultrasphinx",
+
+		"/etc/init.d/git-daemon":
+			ensure => present,
+			owner => "root",
+			group => "root",
+			mode => 755;
+#			content => "/var/www/gitorious/doc/templates/centos/git-ultrasphinx",
     }
 
-#    service {"git-ultrasphinx":
-#        ensure => running,
-#        enable => true,
-#        hasstatus => true,
-#        hasrestart => true,
-#       require => File["/etc/init.d/git-ultrasphinx"],
-#    }
+/*
+	service {
+		"git-ultrasphinx":
+			ensure => running,
+			enable => true,
+			hasstatus => true,
+			hasrestart => true,
+			require => File["/etc/init.d/git-ultrasphinx"];
 
-    file {"/etc/init.d/git-daemon":
-        source => "/var/www/gitorious/doc/templates/centos/git-ultrasphinx",
-        ensure => present,
-        owner => "root",
-        group => "root",
-        mode => 755,
+		"git-daemon":
+			ensure => running,
+			enable => true,
+			hasstatus => true,
+			hasrestart => true,
+			require => File["/etc/init.d/git-daemon"];
     }
 
-#    service {"git-daemon":
-#        ensure => running,
-#        enable => true,
-#        hasstatus => true,
-#        hasrestart => true,
-#        require => File["/etc/init.d/git-daemon"],
-#    }
+    exec {
+		"stompserver start &":
+			command => "stompserver start &",
+			cwd => "/root/",
+			require => Service["git-daemon"];
 
-#    exec {"stompserver start &":
-#      command => "stompserver start &",
-#      cwd => "/root/",
-#     require => Service["git-daemon"],
-#    }
-
-#    exec { "script/poller":
-#      command => "script/poller start",
-#      cwd => "/var/www/gitorious",
-#     require => [Service["git-daemon"], File["/var/www/gitorious/tmp/pids"]],
-#    }
+		"script/poller":
+			command => "script/poller start",
+			cwd => "/var/www/gitorious",
+			require => [Service["git-daemon"], File["/var/www/gitorious/tmp/pids"]];
+    }
+*/
 }

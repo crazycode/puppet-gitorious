@@ -2,6 +2,8 @@ class gitorious::depends {
 	include gitorious::rpms
 	include gitorious::gems
 	include gitorious::source
+
+	Class['gitorious::rpms'] -> Class['gitorious::source'] -> Class['gitorious::gems']
 }
 
 class gitorious::rpms {
@@ -31,6 +33,7 @@ class gitorious::rpms {
 					"libwmf-devel",
 					"libexif-devel",
 					"libtiff-devel",
+					'ruby-shadow',
 					'sphinx']
 
 	package {
@@ -79,29 +82,29 @@ class gitorious::rpms {
 
 class gitorious::gems {
   $gems = ["mime-types",
-			"chronic",
+#			"chronic",
 			"facter",
-			"BlueCloth",
-			"ruby-yadis",
-			"ruby-openid",
+#			"BlueCloth",
 			"rmagick",
-			"geoip",
+#			"geoip",
 			"ultrasphinx",
 			"rspec",
 			"rspec-rails",
-			"RedCloth",
-			"daemons",
-			"diff-lcs",
-			"highline",
-			"fastthread",
-			"hoe",
-			"oauth",
-			"rack",
-			"rake",
-			"ruby-hmac",
-			'json',
-			'bundle',
-			'builder']
+			'rvm',
+#			"RedCloth",
+#			"daemons",
+#			"diff-lcs",
+#			"highline",
+#			"fastthread",
+#			"hoe",
+#			"oauth",
+#			"rack",
+#			"ruby-hmac",
+#			"ruby-openid",
+#			"ruby-yadis",
+#			'json',
+			'bundle']
+#			'builder']
 
   package {
 	$gems:
@@ -136,17 +139,36 @@ class gitorious::gems {
 
 	'puppet':
 		ensure => latest,
-		provider => gem,
+		provider => gem;
 #		require => Package[$gems];
-  }
+	}
+
+/*
+	gem {
+		'rake':
+			name => 'rake',
+			version => '0.8.7';
+	}
+*/
+
+	exec {
+		'bundle install':
+			command => 'bundle install',
+			cwd => '/usr/share/gitorious';
+
+		'remove rake-0.9.2':
+			command => 'gem uni rake -v 0.9.2',
+			path => '/bin:/sbin:/usr/bin:/usr/sbin',
+			onlyif => 'gem list -l rake|grep "0.9.2"';
+	}
 }
 
 class gitorious::source {
 	exec {
 		"git_pull_gitorious":
-			command => "git clone https://git.gitorious.org/gitorious/mainline.git gitorious",
-			cwd => "/var/www",
-			creates => "/var/www/gitorious",
+			command => "git clone git://gitorious.org/gitorious/mainline.git gitorious",
+			cwd => "/usr/share",
+			creates => "/usr/share/gitorious",
 			timeout => "-1";
 	}
 }

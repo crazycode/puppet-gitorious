@@ -1,24 +1,24 @@
 class gitorious::config {
     file {
-		"/var/www/gitorious/config/database.yml":
+		"/usr/share/gitorious/config/database.yml":
 			content => template("gitorious/database.yml.erb"),
 			ensure => present,
 			owner => "git",
 			group => "git";
 
-		"/var/www/gitorious/config/gitorious.yml":
+		"/usr/share/gitorious/config/gitorious.yml":
 			content => template("gitorious/gitorious.yml.erb"),
 			ensure => present,
 			owner => "git",
 			group => "git";
 
-		"/var/www/gitorious/config/broker.yml":
+		"/usr/share/gitorious/config/broker.yml":
 			content => template("gitorious/broker.yml.erb"),
 			ensure => present,
 			owner => "git",
 			group => "git";
 
-		"/var/www/gitorious/config/environments/production.rb":
+		"/usr/share/gitorious/config/environments/production.rb":
 			content => template("gitorious/production.rb.erb"),
 			ensure => present;
 
@@ -33,19 +33,20 @@ class gitorious::config {
 /*
 		"create_db":
 			command => "rake db:create RAILS_ENV=production",
-			cwd => "/var/www/gitorious/",
-			require => File['/var/www/gitorious/config/database.yml', '/var/www/gitorious/config/gitorious.yml'];
+			cwd => "/usr/share/gitorious/",
+			require => File['/usr/share/gitorious/config/database.yml', '/usr/share/gitorious/config/gitorious.yml'];
+*/
 
 		"migrate_db":
-			command => "rake db:migrate RAILS_ENV=production",
-			cwd => "/var/www/gitorious/";
+			command => "rake db:setup RAILS_ENV=production",
+			cwd => "/usr/share/gitorious/";
 
 		"bootstrap_sphinx":
 			command => "rake ultrasphinx:bootstrap RAILS_ENV=production",
-			cwd => "/var/www/gitorious/",
-			require => Exec["create_db"],
-			notify => Service["httpd"];
-*/
+			cwd => "/usr/share/gitorious/";
+#			require => Exec["create_db"],
+#			notify => Service["httpd"];
+
 		"ldconfig":
 			command => "ldconfig",
 			cwd => "/root/",
