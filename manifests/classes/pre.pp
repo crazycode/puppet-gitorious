@@ -11,6 +11,9 @@ class gitorious::pre {
 			onlyif => 'which gem',
 			require => Exec['gem update system'];
 
+		'apt update':
+			command => 'apt-get update';
+
 		'yum update':
 	        command => "yum -y update",
 	        cwd => "/root/",
