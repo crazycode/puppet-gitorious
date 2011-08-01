@@ -143,14 +143,6 @@ class gitorious::gems {
 #		require => Package[$gems];
 	}
 
-/*
-	gem {
-		'rake':
-			name => 'rake',
-			version => '0.8.7';
-	}
-*/
-
 	exec {
 		'bundle install':
 			command => 'bundle install',
