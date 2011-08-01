@@ -1,12 +1,4 @@
-import 'config.pp'
-import 'core.pp'
-import 'depends.pp'
-import 'passenger.pp'
-import 'pre.pp'
-import 'repo.pp'
-import 'services.pp'
-import 'user.pp'
-import 'utils.pp'
+import 'classes/*'
 
 class gitorious {
 	include gitorious::config
