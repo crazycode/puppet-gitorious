@@ -24,7 +24,7 @@ class gitorious::config {
 
 		"/etc/ld.so.conf.d/gitorious.conf":
 			path => "/etc/ld.so.conf.d/gitorious.conf",
-			content => template('puppet:///gitorious/gitorious.conf.erb'),
+			content => template('gitorious/gitorious.conf.erb'),
 			owner => "root",
 			group => "root";
 	}
