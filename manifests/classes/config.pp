@@ -54,6 +54,7 @@ class gitorious::config {
 			subscribe => [File["/etc/ld.so.conf.d/gitorious.conf"]];
 	}
 
+/*
     line {
 		"export_LD_LIBRARY_PATH":
 			file => "/etc/profile",
@@ -65,4 +66,5 @@ class gitorious::config {
 			line => "export LDFLAGS=\"-L/usr/local/lib -Wl,-rpath,/usr/local/lib\"",
 			ensure => present;
 	}
+*/
 }
