@@ -14,8 +14,8 @@
 development:
   adapter: mysql
   database: gitorious_development
-  username: root
-  password: <%= mysql_rootpass %>
+  username: <%= dbuser %>
+  password: <%= dbpass %>
   host: localhost
   encoding: utf8
 
@@ -25,15 +25,15 @@ development:
 test:
   adapter: mysql
   database: gitorious_test
-  username: root
-  password: <%= mysql_rootpass %>
+  username: <%= dbuser %>
+  password: <%= dbpass %>
   host: localhost
   encoding: utf8
 
 production:
   adapter: mysql
   database: gitorious_production
-  username: root
-  password: <%= mysql_rootpass %>
+  username: <%= dbuser %>
+  password: <%= dbpass %>
   host: localhost
   encoding: utf8
