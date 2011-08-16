@@ -22,15 +22,15 @@ class gitorious::services {
 			ensure => present,
 			owner => "root",
 			group => "root",
-			mode => 755;
-#			content => "/var/www/gitorious/doc/templates/centos/git-ultrasphinx",
+			mode => 755,
+			content => template("gitorious/$operatingsystem/git-ultrasphinx.erb");
 
 		"/etc/init.d/git-daemon":
 			ensure => present,
 			owner => "root",
 			group => "root",
-			mode => 755;
-#			content => "/var/www/gitorious/doc/templates/centos/git-ultrasphinx",
+			mode => 755,
+			content => template("gitorious/$operatingsystem/git-daemon.erb");
     }
 
 /*
