@@ -1,9 +1,5 @@
 class gitorious::depends {
-	include gitorious::rpms
-	include gitorious::gems
-	include gitorious::source
-
-	Class['gitorious::rpms'] -> Class['gitorious::source'] -> Class['gitorious::gems']
+	class{'gitorious::rpms':} -> class{'gitorious::source':} -> class{'gitorious::gems':}
 }
 
 class gitorious::rpms {
@@ -38,6 +34,7 @@ class gitorious::rpms {
 
 	package {
 		$package_list:
+			require => Class['mysql::packages'],
 			ensure => installed;
     
 		'oniguruma':
@@ -81,32 +78,62 @@ class gitorious::rpms {
 }
 
 class gitorious::gems {
-  $gems = ["mime-types",
-#			"chronic",
-			"facter",
-#			"BlueCloth",
-			"rmagick",
-#			"geoip",
-			"ultrasphinx",
-			"rspec",
-			"rspec-rails",
-			'rvm',
-#			"RedCloth",
-#			"daemons",
-#			"diff-lcs",
-#			"highline",
-#			"fastthread",
-#			"hoe",
-#			"oauth",
-#			"rack",
-#			"ruby-hmac",
-#			"ruby-openid",
-#			"ruby-yadis",
-#			'json',
-			'bundle']
-#			'builder']
+	$gems = [
+		'abstract',
+		'actionpack',
+		'activemessaging',
+		'activemodel',
+		'activerecord',
+		'activesupport',
+		'acts-as-taggable-on',
+		'arel',
+		'builder',
+		'bundle',
+		'bundler',
+		'capillary',
+		'chronic',
+		'daemons',
+		'diff-lcs',
+		'echoe',
+		'erubis',
+		'eventmachine',
+		'exception_notification',
+		'facter',
+		'factory_girl',
+		'fastthread',
+		'gemcutter',
+		'geoip',
+		'highline',
+		'hodel_3000_compliant_logger',
+		'hoe',
+		'i18n',
+		'json',
+		'json_pure',
+		'mime-types',
+		'mocha',
+		'mysql',
+		'oauth',
+		'oniguruma',
+		'paperclip',
+		'passenger',
+		'plist',
+		'proxymachine',
+		'rack',
+
+#		"BlueCloth",
+		"rmagick",
+		"ultrasphinx",
+		"rspec",
+		"rspec-rails",
+		'rvm'
+#		"RedCloth",
+#		"ruby-hmac",
+#		"ruby-openid",
+#		"ruby-yadis",
+	]
 
   package {
+/*
 	$gems:
     	ensure => installed,
     	provider => gem;
@@ -141,16 +168,22 @@ class gitorious::gems {
 		ensure => latest,
 		provider => gem;
 #		require => Package[$gems];
+*/
+	'bundle':
+		ensure => latest,
+		provider => gem;
 	}
 
 	exec {
 		'bundle install':
 			command => 'bundle install',
+#			before => Exec['install modules'],
 			cwd => '/usr/share/gitorious';
 
 		'remove rake-0.9.2':
 			command => 'gem uni rake -v 0.9.2',
 			path => '/bin:/sbin:/usr/bin:/usr/sbin',
+#			require => Exec['install modules'],
 			onlyif => 'gem list -l rake|grep "0.9.2"';
 	}
 }
@@ -160,7 +193,8 @@ class gitorious::source {
 		"git_pull_gitorious":
 			command => "git clone git://gitorious.org/gitorious/mainline.git gitorious",
 			cwd => "/usr/share",
-			creates => "/usr/share/gitorious",
+			creates => "/usr/share/gitorious/public",
+			before => File["$home"],
 			timeout => "-1";
 	}
 }
