@@ -1,32 +1,38 @@
 class gitorious::config {
     file {
-		"/usr/share/gitorious/config/database.yml":
-			content => template("gitorious/database.yml.erb"),
+		"$home/config/database.yml":
+			content => template("gitorious/common/database.yml.erb"),
 			ensure => present,
 			owner => "git",
 			group => "git";
 
-		"/usr/share/gitorious/config/gitorious.yml":
-			content => template("gitorious/gitorious.yml.erb"),
+		"$home/config/gitorious.yml":
+			content => template("gitorious/common/gitorious.yml.erb"),
 			ensure => present,
 			owner => "git",
 			group => "git";
 
-		"/usr/share/gitorious/config/broker.yml":
-			content => template("gitorious/broker.yml.erb"),
+		"$home/config/broker.yml":
+			content => template("gitorious/common/broker.yml.erb"),
 			ensure => present,
 			owner => "git",
 			group => "git";
 
-		"/usr/share/gitorious/config/environments/production.rb":
-			content => template("gitorious/production.rb.erb"),
+		"$home/config/environments/production.rb":
+			content => template("gitorious/common/production.rb.erb"),
 			ensure => present;
 
 		"/etc/ld.so.conf.d/gitorious.conf":
 			path => "/etc/ld.so.conf.d/gitorious.conf",
-			content => template('gitorious/gitorious.conf.erb'),
+			content => template('gitorious/common/gitorious.conf.erb'),
 			owner => "root",
 			group => "root";
+
+		"/etc/$webserver/conf.d/gitorious.conf":
+			content => template('gitorious/common/apache-gitorious.conf.erb'),
+			owner => root,
+			group => root,
+			mode => 0644;
 	}
 
 	exec {
@@ -38,7 +44,8 @@ class gitorious::config {
 */
 
 		"migrate_db":
-			command => "rake db:setup RAILS_ENV=production",
+			environment => "RAILS_ENV=production",
+			command => "rake db:setup",
 			cwd => "/usr/share/gitorious/";
 
 		"bootstrap_sphinx":
