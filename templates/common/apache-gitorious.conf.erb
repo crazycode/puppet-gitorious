@@ -1,0 +1,13 @@
+<VirtualHost *:80>
+    ServerName <%= hostname %>
+	ServerAdmin admin@<%= hostname %>
+    DocumentRoot <%= home %>/public
+	ErrorLog /var/log/<%= webserver %>/gitorious.error_log
+	CustomLog /var/log/<%= webserver %>/gitorious.access_log combined
+	<Directory <%= home %>/public>
+		AllowOverride All
+		Options -MultiViews
+		Order allow,deny
+		Allow from all
+	</Directory>
+</VirtualHost>
