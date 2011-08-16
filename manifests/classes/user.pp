@@ -5,7 +5,7 @@ class gitorious::user {
         home    => "/home/git",
         shell   => "/bin/bash",
         managehome => true,
-        password => '$1$5dZQgQSq$POqlSWnuiYZ7d1VXfgXGo.',
+        password => '$1$5dZQgQSq$UQzC8uL2.hbofNAKabzbb0', # pass: gitorious
     }
 
     file {
