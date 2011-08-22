@@ -1,5 +1,5 @@
 class gitorious::depends {
-	class{'gitorious::rpms':} -> class{'gitorious::source':} -> class{'gitorious::gems':}
+	class{'gitorious::rpms':} -> class{'gitorious::source':}
 }
 
 class gitorious::rpms {
@@ -65,6 +65,10 @@ class gitorious::rpms {
 				},
 				'*' => 'curl-devel',
 			};
+
+		'bundler':
+			ensure => latest,
+			name => rubygem-bundler;
 	}
 
 	@package {
@@ -74,104 +78,6 @@ class gitorious::rpms {
 
 	if $operatingsystemrelease != '6.0' {
 		realize(Package['libtool-ltdl-devel'])
-	}
-}
-
-class gitorious::gems {
-	$gems = [
-		'abstract',
-		'actionpack',
-		'activemessaging',
-		'activemodel',
-		'activerecord',
-		'activesupport',
-		'acts-as-taggable-on',
-		'arel',
-		'builder',
-		'bundle',
-		'bundler',
-		'capillary',
-		'chronic',
-		'daemons',
-		'diff-lcs',
-		'echoe',
-		'erubis',
-		'eventmachine',
-		'exception_notification',
-		'facter',
-		'factory_girl',
-		'fastthread',
-		'gemcutter',
-		'geoip',
-		'highline',
-		'hodel_3000_compliant_logger',
-		'hoe',
-		'i18n',
-		'json',
-		'json_pure',
-		'mime-types',
-		'mocha',
-		'mysql',
-		'oauth',
-		'oniguruma',
-		'paperclip',
-		'passenger',
-		'plist',
-		'proxymachine',
-		'rack',
-
-#		"BlueCloth",
-		"rmagick",
-		"ultrasphinx",
-		"rspec",
-		"rspec-rails",
-		'rvm'
-#		"RedCloth",
-#		"ruby-hmac",
-#		"ruby-openid",
-#		"ruby-yadis",
-	]
-
-  package {
-/*
-	$gems:
-    	ensure => installed,
-    	provider => gem;
-#    	require => [Package[$package_list], Package['oniguruma'], Exec["gem_update"]];
-
-	'textpow':
-		ensure => present,
-		provider => gem,
-		require => Package['oniguruma-devel'];
-
-	"echoe":
-    	provider => gem,
-    	ensure =>"3.2";
-#    	require => Package[$gems];
-
-	"rdiscount":
-    	ensure => "1.3.1.1",
-    	provider => gem;
-#    	require => Package[$gems];
-
-	"stomp":
-    	ensure => "1.1",
-    	provider => gem;
-#    	require => Package[$gems];
-
-	"passenger":
-    	ensure => "2.2.7",
-    	provider => gem;
-#    	require => Package[$gems];
-
-	'puppet':
-		ensure => latest,
-		provider => gem;
-#		require => Package[$gems];
-*/
-	'bundle':
-		ensure => latest,
-		provider => gem;
 	}
 
 	exec {
