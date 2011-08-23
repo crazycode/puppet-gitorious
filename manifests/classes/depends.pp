@@ -138,7 +138,10 @@ class gitorious::source {
 			command => "git clone git://gitorious.org/gitorious/mainline.git gitorious",
 			cwd => "/usr/share",
 			creates => "/usr/share/gitorious/public",
-#			before => File["$home"],
+			before => $gitorious::stages ? {
+				'no' => File["$home"],
+				default => undef,
+			},
 			timeout => "-1";
 	}
 }
