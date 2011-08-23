@@ -46,12 +46,18 @@ class gitorious::repo {
 			gpgkey => "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-inuits",
 			gpgcheck => 0,
 			require => File["inuits-gpg-key"];
+
+		'inuits-gems':
+			baseurl => 'http://repo.inuits.be/gems',
+			descr => 'inuits internal gems repo',
+			gpgcheck => 0,
+			enabled => 1;			
 	}
 
 	if $operatingsystem == 'Centos' {
 		if $operatingsystemrelease != '6.0' {
-			realize('centosplus')
+			realize(Yumrepo['centosplus'])
 		}
-		realize(File['dag-gpg-key', 'inuits-gpg-key'], Yumrepo['rpmforge', 'inuits'])
+		realize(File['dag-gpg-key', 'inuits-gpg-key'], Yumrepo['rpmforge', 'inuits', 'inuits-gems'])
 	}
 }

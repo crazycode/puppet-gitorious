@@ -30,7 +30,54 @@ class gitorious::rpms {
 					"libexif-devel",
 					"libtiff-devel",
 					'ruby-shadow',
-					'sphinx']
+					'sphinx',
+					'rubygem-rake',
+					'rubygem-SystemTimer',
+					'rubygem-activesupport',
+					'rubygem-activemessaging',
+					'rubygem-activerecord',
+					'rubygem-acts-as-taggable-on',
+					'rubygem-builder',
+					'rubygem-json',
+					'rubygem-capillary',
+					'rubygem-chronic',
+					'rubygem-daemons',
+					'rubygem-diff-lcs',
+					'rubygem-gemcutter',
+					'rubygem-json_pure',
+					'rubygem-rubyforge',
+					'rubygem-echoe',
+					'rubygem-eventmachine',
+					'rubygem-exception_notification',
+					'rubygem-factory_girl',
+					'rubygem-geoip',
+					'rubygem-hodel_3000_compliant_logger',
+					'rubygem-hoe',
+					'rubygem-mime-types',
+					'rubygem-mocha',
+					'rubygem-mysql',
+					'rubygem-oauth',
+					'rubygem-paperclip',
+					'rubygem-proxymachine',
+					'rubygem-rack',
+					'rubygem-rdiscount',
+					'rubygem-redis',
+					'rubygem-redis-namespace',
+					'rubygem-sinatra',
+					'rubygem-vegas',
+					'rubygem-resque',
+					'rubygem-revo-ssl_requirement',
+					'rubygem-riddle',
+					'rubygem-ruby-hmac',
+					'rubygem-ruby-openid',
+					'rubygem-ruby-yadis',
+					'rubygem-shoulda',
+					'rubygem-state_machine',
+					'rubygem-stomp',
+					'rubygem-tuxml',
+					'rubygem-validates_url_format_of',
+					'rubygem-will_paginate',
+					]
 
 	package {
 		$package_list:
@@ -65,10 +112,6 @@ class gitorious::rpms {
 				},
 				'*' => 'curl-devel',
 			};
-
-		'bundler':
-			ensure => latest,
-			name => rubygem-bundler;
 	}
 
 	@package {
@@ -81,11 +124,6 @@ class gitorious::rpms {
 	}
 
 	exec {
-		'bundle install':
-			command => 'bundle install',
-#			before => Exec['install modules'],
-			cwd => '/usr/share/gitorious';
-
 		'remove rake-0.9.2':
 			command => 'gem uni rake -v 0.9.2',
 			path => '/bin:/sbin:/usr/bin:/usr/sbin',
@@ -100,7 +138,7 @@ class gitorious::source {
 			command => "git clone git://gitorious.org/gitorious/mainline.git gitorious",
 			cwd => "/usr/share",
 			creates => "/usr/share/gitorious/public",
-			before => File["$home"],
+#			before => File["$home"],
 			timeout => "-1";
 	}
 }
