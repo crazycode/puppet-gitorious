@@ -26,7 +26,7 @@ class gitorious::repo {
 		"rpmforge":
 			descr => "rpmforge",
 			baseurl => absent,
-			mirrorlist => $operatingsystemrelease ? {
+			mirrorlist => $::operatingsystemrelease ? {
 				'5.*' => "http://apt.sw.be/redhat/el5/en/mirrors-rpmforge",
 				'6.0' => "http://apt.sw.be/redhat/el6/en/mirrors-rpmforge",
 			},
@@ -47,7 +47,7 @@ class gitorious::repo {
 		"inuits":
 			descr => "Inuits internal repo",
 			enabled => 1,
-			baseurl => $operatingsystemrelease ? {
+			baseurl => $::operatingsystemrelease ? {
 				'5.*' => "http://repo.inuits.be/centos/5/os",
 				'6.0' => "http://repo.inuits.be/centos/6/os",
 			},
@@ -62,8 +62,8 @@ class gitorious::repo {
 			enabled => 1;			
 	}
 
-	if $operatingsystem == 'Centos' {
-		if $operatingsystemrelease != '6.0' {
+	if $::operatingsystem == 'Centos' {
+		if $::operatingsystemrelease != '6.0' {
 			realize(Yumrepo['centosplus'])
 		}
 		realize(File['dag-gpg-key', 'inuits-gpg-key'], Yumrepo['rpmforge', 'inuits', 'inuits-gems'])

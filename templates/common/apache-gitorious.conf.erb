@@ -1,10 +1,10 @@
 <VirtualHost *:80>
-    ServerName <%= hostname %>
-	ServerAdmin admin@<%= hostname %>
+    ServerName <%= scope.lookupvar('::hostname') %>
+	ServerAdmin admin@<%= scope.lookupvar('::hostname') %>
     DocumentRoot <%= scope.lookupvar('gitorious::home') %>/public
-	ErrorLog /var/log/<%= webserver %>/gitorious.error_log
-	CustomLog /var/log/<%= webserver %>/gitorious.access_log combined
-	<Directory <%= home %>/public>
+	ErrorLog /var/log/<%= scope.lookupvar('gitorious::webserver') %>/gitorious.error_log
+	CustomLog /var/log/<%= scope.lookupvar('gitorious::webserver') %>/gitorious.access_log combined
+	<Directory <%= scope.lookupvar('gitorious::home') %>/public>
 		AllowOverride All
 		Options -MultiViews
 		Order allow,deny

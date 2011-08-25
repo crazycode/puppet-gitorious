@@ -1,24 +1,24 @@
 class gitorious::config {
     file {
-		"$home/config/database.yml":
+		"$gitorious::home/config/database.yml":
 			content => template("gitorious/common/database.yml.erb"),
 			ensure => present,
 			owner => "git",
 			group => "git";
 
-		"$home/config/gitorious.yml":
+		"$gitorious::home/config/gitorious.yml":
 			content => template("gitorious/common/gitorious.yml.erb"),
 			ensure => present,
 			owner => "git",
 			group => "git";
 
-		"$home/config/broker.yml":
+		"$gitorious::home/config/broker.yml":
 			content => template("gitorious/common/broker.yml.erb"),
 			ensure => present,
 			owner => "git",
 			group => "git";
 
-		"$home/config/environments/production.rb":
+		"$gitorious::home/config/environments/production.rb":
 			content => template("gitorious/common/production.rb.erb"),
 			ensure => present;
 
@@ -28,7 +28,7 @@ class gitorious::config {
 			owner => "root",
 			group => "root";
 
-		"/etc/$webserver/conf.d/gitorious.conf":
+		"/etc/$gitorious::webserver/conf.d/gitorious.conf":
 			content => template('gitorious/common/apache-gitorious.conf.erb'),
 			owner => root,
 			group => root,

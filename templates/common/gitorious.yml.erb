@@ -20,10 +20,10 @@ production:
   gitorious_client_port: 80
 
   # Host the ./script/gitorious script should use:
-  gitorious_client_host: <%= hostname %>
+  gitorious_client_host: <%= scope.lookupvar('::hostname') %>
 
   # Host which is serving the gitorious app, eg "gitorious.org"
-  gitorious_host: <%= hostname %>
+  gitorious_host: <%= scope.lookupvar('::hostname') %>
 
   # User which is running git daemon
   gitorious_user: git

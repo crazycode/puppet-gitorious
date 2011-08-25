@@ -14,8 +14,8 @@
 development:
   adapter: mysql
   database: gitorious_development
-  username: <%= dbuser %>
-  password: <%= dbpass %>
+  username: <%= scope.lookupvar('gitorious::dbuser') %>
+  password: <%= scope.lookupvar('gitorious::dbpass') %>
   host: localhost
   encoding: utf8
 
@@ -25,15 +25,15 @@ development:
 test:
   adapter: mysql
   database: gitorious_test
-  username: <%= dbuser %>
-  password: <%= dbpass %>
+  username: <%= scope.lookupvar('gitorious::dbuser') %>
+  password: <%= scope.lookupvar('gitorious::dbpass') %>
   host: localhost
   encoding: utf8
 
 production:
   adapter: mysql
   database: gitorious_production
-  username: <%= dbuser %>
-  password: <%= dbpass %>
+  username: <%= scope.lookupvar('gitorious::dbuser') %>
+  password: <%= scope.lookupvar('gitorious::dbpass') %>
   host: localhost
   encoding: utf8

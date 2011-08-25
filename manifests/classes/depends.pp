@@ -15,9 +15,9 @@ class gitorious::depends {
 					"ruby-mysql",
 					"djvulibre-devel",
 					"jasper-devel",
-					"librsvg2-devel.$hardwaremodel",
-					"OpenEXR-devel.$hardwaremodel",
-					"graphviz-devel.$hardwaremodel",
+					"librsvg2-devel.$::hardwaremodel",
+					"OpenEXR-devel.$::hardwaremodel",
+					"graphviz-devel.$::hardwaremodel",
 					"ghostscript",
 					"freetype-devel",
 					"libpng-devel",
@@ -91,27 +91,27 @@ class gitorious::depends {
     
 		'oniguruma':
 			ensure => latest,
-			name => "oniguruma.$hardwaremodel",
+			name => "oniguruma.$::hardwaremodel",
 			require => Package[$package_list];
 
 		'oniguruma-devel':
 			ensure => latest,
-			name => "oniguruma-devel.$hardwaremodel",
+			name => "oniguruma-devel.$::hardwaremodel",
 			require => Package['oniguruma'];
 
 		'imagemagick':
-			name => "ImageMagick.$hardwaremodel",
+			name => "ImageMagick.$::hardwaremodel",
 			ensure => latest;
 
 		'imagemagick-devel':
-			name => "ImageMagick-devel.$hardwaremodel",
+			name => "ImageMagick-devel.$::hardwaremodel",
 			ensure => latest,
 			require => Package["imagemagick"];
 
 		'curl-devel':
 			ensure => present,
-			name => $operatingsystem ? {
-				'Centos' => $operatingsystemrelease ? {
+			name => $::operatingsystem ? {
+				'Centos' => $::operatingsystemrelease ? {
 					'6.0' => 'libcurl-devel',
 					'*' => 'curl-devel',
 				},
@@ -136,7 +136,7 @@ class gitorious::depends {
 			ensure => present,
 	}
 
-	if $operatingsystemrelease != '6.0' {
+	if $::operatingsystemrelease != '6.0' {
 		realize(Package['libtool-ltdl-devel'])
 	}
 

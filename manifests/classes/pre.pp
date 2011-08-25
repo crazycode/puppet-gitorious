@@ -25,7 +25,7 @@ class gitorious::pre {
 			onlyif => "yum list installed|grep '.i.86'";
 	}
 
-	if $operatingsystem == 'Centos' {
+	if $::operatingsystem == 'Centos' {
 		realize(Exec['yum update', 'remove_32'])
 	} else {
 		realize(Exec['apt update'])
