@@ -44,9 +44,9 @@ class gitorious::rpms {
 					'rubygem-daemons',
 					'rubygem-diff-lcs',
 					'rubygem-gemcutter',
-					'rubygem-json_pure',
-					'rubygem-rubyforge',
-					'rubygem-echoe',
+#					'rubygem-json_pure',
+#					'rubygem-rubyforge',
+#					'rubygem-echoe',
 					'rubygem-eventmachine',
 					'rubygem-exception_notification',
 					'rubygem-factory_girl',
@@ -81,7 +81,16 @@ class gitorious::rpms {
 
 	package {
 		$package_list:
-			require => Class['mysql::packages'],
+			require => $gitorious::stages ? {
+				'yes' => Class['mysql::packages'],
+				'no' => [ Class['mysql::packages'], Yumrepo['inuits-gems'] ],
+			},
+/*
+			before => $gitorious::stages ? {
+				'yes' => undef,
+				'no' => Yumrepo['epel'],
+			},
+*/
 			ensure => installed;
     
 		'oniguruma':
@@ -112,6 +121,18 @@ class gitorious::rpms {
 				},
 				'*' => 'curl-devel',
 			};
+
+		'json_pure':
+			ensure => '1.5.1',
+			provider => gem;
+
+		'rubyforge':
+			ensure => '2.0.4',
+			provider => gem;
+
+		'echoe':
+			ensure => '3.2',
+			provider => gem;
 	}
 
 	@package {
