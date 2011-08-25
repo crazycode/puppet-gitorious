@@ -27,7 +27,7 @@ class gitorious::depends {
 					"libtiff-devel",
 					'ruby-shadow',
 					'sphinx',
-					'rubygem-rake',
+#					'rubygem-rake',
 					'rubygem-SystemTimer',
 					'rubygem-activesupport',
 					'rubygem-activemessaging',
@@ -129,6 +129,21 @@ class gitorious::depends {
 		'echoe':
 			ensure => '3.2',
 			provider => gem;
+
+		'rake':
+			ensure => '0.9.2',
+			before => $gitorious::stages ? {
+				'yes' => undef,
+				'no' => Exec['install modules'],
+			},
+			provider => gem;
+
+		'rubygem-rake':
+			ensure => present,
+			before => $gitorious::stages ? {
+				'yes' => undef,
+				'no' => Exec['migrate_db'],
+			};
 	}
 
 	@package {
@@ -144,7 +159,10 @@ class gitorious::depends {
 		'remove rake-0.9.2':
 			command => 'gem uni rake -v 0.9.2',
 			path => '/bin:/sbin:/usr/bin:/usr/sbin',
-#			require => Exec['install modules'],
+			require => $gitorious::stages ? {
+				'yes' => undef,
+				'no' => Exec['install modules'],
+			},
 			onlyif => 'gem list -l rake|grep "0.9.2"';
 
 		"git_pull_gitorious":
