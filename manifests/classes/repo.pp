@@ -34,6 +34,7 @@ class gitorious::repo {
 			gpgkey => "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rpmforge-dag",
 			gpgcheck => 1,
 			priority => 1,
+			exclude => 'rubygem-activesupport rubygem-echoe rubygem-rubyforge',
 			require => File["dag-gpg-key"];
 
 		"centosplus":
