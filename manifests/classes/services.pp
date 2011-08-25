@@ -4,8 +4,8 @@ class system::services {
         enable => true,
         hasstatus => true,
         hasrestart => true,
-		name => $operatingsystem ? {
-			Centos => $operatingsystemrelease ? {
+		name => $::operatingsystem ? {
+			Centos => $::operatingsystemrelease ? {
 				'6.0' => 'postfix',
 				'*' => 'sendmail',
 			},
@@ -23,14 +23,14 @@ class gitorious::services {
 			owner => "root",
 			group => "root",
 			mode => 755,
-			content => template("gitorious/$operatingsystem/git-ultrasphinx.erb");
+			content => template("gitorious/$::operatingsystem/git-ultrasphinx.erb");
 
 		"/etc/init.d/git-daemon":
 			ensure => present,
 			owner => "root",
 			group => "root",
 			mode => 755,
-			content => template("gitorious/$operatingsystem/git-daemon.erb");
+			content => template("gitorious/$::operatingsystem/git-daemon.erb");
     }
 
 /*

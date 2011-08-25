@@ -152,7 +152,7 @@ class gitorious::depends {
 			cwd => "/usr/share",
 			creates => "/usr/share/gitorious/public",
 			before => $gitorious::stages ? {
-				'no' => File["$home"],
+				'no' => File["$gitorious::home"],
 				default => undef,
 			},
 			timeout => "-1";
