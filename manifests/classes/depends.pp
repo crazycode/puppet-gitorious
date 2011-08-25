@@ -1,8 +1,4 @@
 class gitorious::depends {
-	class{'gitorious::rpms':} -> class{'gitorious::source':}
-}
-
-class gitorious::rpms {
     $package_list = ["apg",
 					"sqlite-devel",
 					"libjpeg-devel",
@@ -150,11 +146,7 @@ class gitorious::rpms {
 			path => '/bin:/sbin:/usr/bin:/usr/sbin',
 #			require => Exec['install modules'],
 			onlyif => 'gem list -l rake|grep "0.9.2"';
-	}
-}
 
-class gitorious::source {
-	exec {
 		"git_pull_gitorious":
 			command => "git clone git://gitorious.org/gitorious/mainline.git gitorious",
 			cwd => "/usr/share",
