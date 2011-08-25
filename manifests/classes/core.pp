@@ -1,20 +1,17 @@
 class gitorious::core {
 
-/*
 	exec {
 		'gitorious_chown':
 			command => 'chown -R git:git /usr/share/gitorious',
 			refreshonly => true,
 			subscribe => Exec['git_pull_gitorious'];
 	}
-*/
 		
 	file {
 		"$gitorious::home":
 			ensure => directory,
 			owner => "git",
-			group => "git",
-			recurse => true;
+			group => "git";
 
 		"/bin/gitorious":
 			target => "$gitorious::home/script/gitorious",
@@ -24,8 +21,7 @@ class gitorious::core {
 			ensure => directory,
 			owner => "git",
 			group => "git",
-			mode => 0666,
-			recurse => true;
+			mode => 0666;
 
 		"$gitorious::home/tmp": 
 			ensure => directory,
