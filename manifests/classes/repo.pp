@@ -7,10 +7,17 @@ class gitorious::repo {
 			owner => root,
 			group => root;
 
-		"inuits-gpg-key":
+		'inuits-gpg-key':
 			ensure => present,
 			path => "/etc/pki/rpm-gpg/RPM-GPG-KEY-inuits",
-			source => "puppet:///gitorious/keys/RPM-GPG-KEY-inuits",
+			source => "puppet:///gitorious/keys/RPM-GPG-KEY-inuits.new",
+			owner => root,
+			group => root;
+
+		"inuits-gpg-key.old":
+			ensure => present,
+			path => "/etc/pki/rpm-gpg/RPM-GPG-KEY-inuits",
+			source => "puppet:///gitorious/keys/RPM-GPG-KEY-inuits.old",
 			owner => root,
 			group => root;
     }
@@ -44,7 +51,7 @@ class gitorious::repo {
 				'6.0' => "http://repo.inuits.be/centos/6/os",
 			},
 			gpgkey => "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-inuits",
-			gpgcheck => 0,
+			gpgcheck => 1,
 			require => File["inuits-gpg-key"];
 
 		'inuits-gems':
