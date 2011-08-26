@@ -33,8 +33,8 @@ class gitorious::services {
 			content => template("gitorious/$::operatingsystem/git-daemon.erb");
     }
 
-/*
 	service {
+/*
 		"git-ultrasphinx":
 			ensure => running,
 			enable => true,
@@ -48,8 +48,14 @@ class gitorious::services {
 			hasstatus => true,
 			hasrestart => true,
 			require => File["/etc/init.d/git-daemon"];
-    }
+*/
 
+		'iptables':
+			ensure => stopped,
+			enable => false;
+	}
+
+/*
     exec {
 		"stompserver start &":
 			command => "stompserver start &",
