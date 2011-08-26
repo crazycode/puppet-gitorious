@@ -1,12 +1,4 @@
 class gitorious::core {
-
-	exec {
-		'gitorious_chown':
-			command => 'chown -R git:git /usr/share/gitorious',
-			refreshonly => true,
-			subscribe => Exec['git_pull_gitorious'];
-	}
-		
 	file {
 		"$gitorious::home":
 			ensure => directory,
