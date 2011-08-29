@@ -32,27 +32,37 @@ class gitorious::config {
 			content => template('gitorious/common/apache-gitorious.conf.erb'),
 			owner => root,
 			group => root,
+			before => $gitorious::stages ? {
+				'yes' => undef,
+				'no' => Service["$webserver"],
+			},
 			mode => 0644;
 	}
 
 	exec {
-/*
-		"create_db":
-			command => "rake db:create RAILS_ENV=production",
-			cwd => "/usr/share/gitorious/",
-			require => File['/usr/share/gitorious/config/database.yml', '/usr/share/gitorious/config/gitorious.yml'];
-*/
-
 		"migrate_db":
 			environment => "RAILS_ENV=production",
-			command => "rake db:setup",
-			cwd => "/usr/share/gitorious/";
+			command => "bundle exec rake db:migrate",
+			cwd => "/usr/share/gitorious/",
+			require => File["$gitorious::home/config/environments/production.rb"];
 
 		"bootstrap_sphinx":
-			command => "rake ultrasphinx:bootstrap RAILS_ENV=production",
-			cwd => "/usr/share/gitorious/";
-#			require => Exec["create_db"],
-#			notify => Service["httpd"];
+			command => 'bundle exec rake ultrasphinx:bootstrap',
+			environment => 'RAILS_ENV=production',
+			cwd => "/usr/share/gitorious/",
+			require => $gitorious::stages ? {
+				'yes' => undef,
+				'no' => Exec["migrate_db"],
+			},
+			notify => $gitorious::stages ? {
+				'yes' => undef,
+				'no' => Service["httpd"],
+			};
+
+		'gitorious_chown':
+			command => 'chown -R git:git /usr/share/gitorious',
+			refreshonly => true,
+			subscribe => Exec['migrate_db'];
 
 		"ldconfig":
 			command => "ldconfig",
@@ -60,18 +70,4 @@ class gitorious::config {
 			refreshonly => true,
 			subscribe => [File["/etc/ld.so.conf.d/gitorious.conf"]];
 	}
-
-/*
-    line {
-		"export_LD_LIBRARY_PATH":
-			file => "/etc/profile",
-			line => "export LD_LIBRARY_PATH=\"/usr/local/lib\"",
-			ensure => present;
-
-		"export_LDFLAGS":
-			file => "/etc/profile",
-			line => "export LDFLAGS=\"-L/usr/local/lib -Wl,-rpath,/usr/local/lib\"",
-			ensure => present;
-	}
-*/
 }
