@@ -11,8 +11,8 @@
 
 # Author: Fabio Akita <fabioakita@gmail.com>
 
-RUBY_HOME=<%= ruby::home %>
-GITORIOUS_HOME=<%= gitorious::home %>
+RUBY_HOME=<%= scope.lookupvar('ruby::home') %>/bin
+GITORIOUS_HOME=<%= scope.lookupvar('gitorious::home') %>
 RETVAL=0
 PROG="git-daemon"
 GIT_DAEMON="$RUBY_HOME/bin/ruby $GITORIOUS_HOME/script/git-daemon -d"

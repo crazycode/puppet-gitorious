@@ -8,7 +8,7 @@
 # processname: searchd
 # pidfile: /var/www/gitorious/db/sphinx/log/searchd.pid
  
-GITORIOUS_HOME=<%= "gitorious::home" %>
+GITORIOUS_HOME=<%= scope.lookupvar('gitorious::home') %>
 RETVAL=0
 START_CMD="cd $GITORIOUS_HOME && rake ultrasphinx:daemon:start RAILS_ENV=production"
 STOP_CMD="cd $GITORIOUS_HOME && rake ultrasphinx:daemon:stop RAILS_ENV=production"
