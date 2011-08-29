@@ -5,7 +5,8 @@ class gitorious (
 	$dbpass = 'gitorious',
 	$webserver = 'apache2',
 	$home = '/usr/share/gitorious',
-	$stages = 'no'
+	$stages = 'no',
+	$host
 ) {
 	if $stages != 'yes' {
 		class{'gitorious::pre':} -> class{'gitorious::repo':} -> class{'gitorious::depends':} -> class{'gitorious::user':} -> class{'gitorious::core':} -> class{'gitorious::config':} -> class{'gitorious::services':}
