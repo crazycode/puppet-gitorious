@@ -1,5 +1,6 @@
 class gitorious::depends {
-    $package_list = ["apg",
+    $package_list = [
+					"apg",
 					"sqlite-devel",
 					"libjpeg-devel",
 					"readline-devel",
@@ -27,7 +28,8 @@ class gitorious::depends {
 					"libtiff-devel",
 					'ruby-shadow',
 					'sphinx',
-					]
+					'activemq',
+	]
 
 	package {
 		$package_list:
