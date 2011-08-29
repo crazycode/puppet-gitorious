@@ -52,7 +52,7 @@ class gitorious::repo {
 				'6.0' => "http://repo.inuits.be/centos/6/os",
 			},
 			gpgkey => "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-inuits",
-			gpgcheck => 1,
+			gpgcheck => 0,
 			require => File["inuits-gpg-key"];
 
 		'inuits-gems':
