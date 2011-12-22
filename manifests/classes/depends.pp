@@ -8,8 +8,6 @@ class gitorious::depends {
 					"zlib-devel",
 					"openssl-devel",
 					"libyaml-devel",
-					"gcc",
-					"gcc-c++",
 					"autoconf",
 					"automake",
 					"git",
@@ -57,16 +55,6 @@ class gitorious::depends {
 			name => "ImageMagick-devel.$::hardwaremodel",
 			ensure => latest,
 			require => Package["imagemagick"];
-
-		'curl-devel':
-			ensure => present,
-			name => $::operatingsystem ? {
-				'Centos' => $::operatingsystemrelease ? {
-					'6.0' => 'libcurl-devel',
-					'*' => 'curl-devel',
-				},
-				'*' => 'curl-devel',
-			};
 
 		'rake':
 			ensure => '0.9.2',
