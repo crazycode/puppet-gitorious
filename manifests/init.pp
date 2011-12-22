@@ -28,4 +28,8 @@ class gitorious (
 				stage => services;
 		}
 	}
+
+  class {
+    'passenger':;
+  }
 }
