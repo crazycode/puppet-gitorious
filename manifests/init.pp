@@ -30,6 +30,8 @@ class gitorious (
 	}
 
   class {
+    'mysql':
+      rootpass => 'foobar';
     'passenger':;
   }
 
