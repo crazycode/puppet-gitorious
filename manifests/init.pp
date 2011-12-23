@@ -21,6 +21,7 @@ class gitorious (
   class{'gitorious::depends':} ->
   class{'gitorious::user':} ->
   class{'gitorious::core':} ->
+  class{'gitorious::dbconf':} ->
   class{'gitorious::config':} ->
   class{'gitorious::services':}
 
