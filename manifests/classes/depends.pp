@@ -31,10 +31,7 @@ class gitorious::depends {
 
 	package {
 		$package_list:
-			require => $gitorious::stages ? {
-				'yes' => Class['mysql::packages'],
-				'no' => [ Class['mysql::packages'], Yumrepo['inuits-gems'] ],
-			},
+			require => [ Class['mysql::packages'], Yumrepo['inuits-gems'] ],
 			ensure => installed;
     
 		'oniguruma':
@@ -58,10 +55,7 @@ class gitorious::depends {
 
 		'rake':
 			ensure => '0.9.2',
-			before => $gitorious::stages ? {
-				'yes' => Exec['bundle_install'],
-				'no' => Exec['install modules', 'bundle_install'],
-			},
+			before => Exec['install modules', 'bundle_install'],
 			provider => gem;
 
 		'bundler':
@@ -89,10 +83,7 @@ class gitorious::depends {
 			command => "git clone git://gitorious.org/gitorious/mainline.git gitorious",
 			cwd => "/usr/share",
 			creates => "/usr/share/gitorious/public",
-			before => $gitorious::stages ? {
-				'no' => File["$gitorious::home"],
-				default => undef,
-			},
+			before => File["$gitorious::home"],
 			require => Package[$package_list],
 			timeout => "-1";
 	}

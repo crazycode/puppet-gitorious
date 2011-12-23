@@ -32,10 +32,7 @@ class gitorious::config {
 			content => template('gitorious/common/apache-gitorious.conf.erb'),
 			owner => root,
 			group => root,
-			before => $gitorious::stages ? {
-				'yes' => undef,
-				'no' => Service["$webserver"],
-			},
+			before => Service["$webserver"],
 			mode => 0644;
 	}
 
@@ -50,14 +47,8 @@ class gitorious::config {
 			command => 'bundle exec rake ultrasphinx:bootstrap',
 			environment => 'RAILS_ENV=production',
 			cwd => "/usr/share/gitorious/",
-			require => $gitorious::stages ? {
-				'yes' => undef,
-				'no' => Exec["migrate_db"],
-			},
-			notify => $gitorious::stages ? {
-				'yes' => undef,
-				'no' => Service["httpd"],
-			};
+			require => Exec["migrate_db"],
+			notify => Service["httpd"];
 
 		'gitorious_chown':
 			command => 'chown -R git:git /usr/share/gitorious',
