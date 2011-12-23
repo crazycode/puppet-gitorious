@@ -9,7 +9,8 @@ class gitorious (
 ) {
   class {
     'repos':;
-    'apache':;
+    'apache':
+      devel => yes;
     'passenger':;
     'mysql':
       rootpass => 'foobar';
