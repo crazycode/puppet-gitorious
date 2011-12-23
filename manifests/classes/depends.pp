@@ -27,6 +27,8 @@ class gitorious::depends {
 					'ruby-shadow',
 					'sphinx',
 					'activemq',
+					'libxslt',
+					'libxslt-devel',
 	]
 
 	package {
