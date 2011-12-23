@@ -1,8 +1,7 @@
-class dbconf {
+class gitorious::dbconf {
 	mysql_db { 'gitorious_production':
 		name => 'gitorious_production',
 		user => 'gitorious',
-		pass => 'gitorious',
 	}
 
 	mysql_user { 'gitorious':
