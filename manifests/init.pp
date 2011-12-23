@@ -8,11 +8,11 @@ class gitorious (
 	$host
 ) {
   class {
+    'repos':;
     'apache':;
+    'passenger':;
     'mysql':
       rootpass => 'foobar';
-    'passenger':;
-    'repos':;
   }
 
   class{'gitorious::pre':} ->
