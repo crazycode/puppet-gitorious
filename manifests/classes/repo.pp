@@ -3,6 +3,6 @@ class gitorious::repo {
 		if $::operatingsystemrelease != '6.0' {
 			realize(Yumrepo['centosplus'])
 		}
-		realize(Yumrepo['inuits', 'inuits-gems'])
+		realize(Yumrepo['inuits', 'inuits-gems', 'rpmforge'], File['rpmforge-gpg-key'])
 	}
 }
