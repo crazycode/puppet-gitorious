@@ -15,7 +15,7 @@ RUBY_HOME=<%= scope.lookupvar('ruby::home') %>/bin
 GITORIOUS_HOME=<%= scope.lookupvar('gitorious::home') %>
 RETVAL=0
 PROG="git-daemon"
-GIT_DAEMON="$RUBY_HOME/bin/ruby $GITORIOUS_HOME/script/git-daemon -d"
+GIT_DAEMON="$RUBY_HOME/ruby $GITORIOUS_HOME/script/git-daemon -d"
 LOCK_FILE=/var/lock/git-daemon
 PID_FILE=$GITORIOUS_HOME/log/git-daemon.pid
  
