@@ -9,6 +9,7 @@ class gitorious (
 ) {
   class {
     'repos':;
+    'activemq':;
     'apache':
       devel => yes;
     'passenger':;
