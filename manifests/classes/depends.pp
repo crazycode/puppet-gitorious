@@ -26,7 +26,6 @@ class gitorious::depends {
 					"libtiff-devel",
 					'ruby-shadow',
 					'sphinx',
-					'activemq',
 					'libxslt',
 					'libxslt-devel',
 	]
