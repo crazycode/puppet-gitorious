@@ -80,6 +80,9 @@ class gitorious::depends {
 			before => File["$gitorious::home"],
 			require => Exec['git_pull_gitorious'];
 
+#	needs a specific version for now.
+#	since there have been some less stable commits recently
+#	checkout bed1990 commit once it's cloned to get it working
 		"git_pull_gitorious":
 			command => "git clone git://gitorious.org/gitorious/mainline.git gitorious",
 			cwd => "/usr/share",
