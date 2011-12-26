@@ -55,7 +55,6 @@ class gitorious::services {
 			enable => false;
 	}
 
-/*
     exec {
 		"stompserver start &":
 			command => "stompserver start &",
@@ -67,5 +66,4 @@ class gitorious::services {
 			cwd => "${gitorious::home}",
 			require => [Service["git-daemon"], File["/var/www/gitorious/tmp/pids"]];
     }
-*/
 }
