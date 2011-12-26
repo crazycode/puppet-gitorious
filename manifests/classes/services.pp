@@ -64,7 +64,7 @@ class gitorious::services {
 
 		"script/poller":
 			command => "script/poller start",
-			cwd => "/var/www/gitorious",
+			cwd => "${gitorious::home}",
 			require => [Service["git-daemon"], File["/var/www/gitorious/tmp/pids"]];
     }
 */
