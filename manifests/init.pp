@@ -1,10 +1,10 @@
 import 'classes/*'
 
 class gitorious (
-	$dbuser = 'gitorious',
-	$dbpass = 'gitorious',
+	$dbuser    = 'gitorious',
+	$dbpass    = 'gitorious',
 	$webserver = 'apache2',
-	$home = '/usr/share/gitorious',
+	$home      = '/usr/share/gitorious',
 	$host
 ) {
   class {
