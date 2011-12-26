@@ -32,7 +32,7 @@ class gitorious::depends {
 
 	package {
 		$package_list:
-			require => [ Class['mysql::packages'], Yumrepo['inuits-gems'] ],
+			require => [ Class['mysql::packages'], Yumrepo['inuits-gems', 'rpmforge'] ],
 			ensure => installed;
     
 		'oniguruma':
