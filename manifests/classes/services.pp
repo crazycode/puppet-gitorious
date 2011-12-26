@@ -62,7 +62,9 @@ class gitorious::services {
 			require => Service["git-daemon"];
 
 		"script/poller":
+			environment => 'RAILS_ENV=production',
 			command => "script/poller start",
+			user => 'git',
 			cwd => "${gitorious::home}",
 			require => [Service["git-daemon"], File["/var/www/gitorious/tmp/pids"]];
     }
