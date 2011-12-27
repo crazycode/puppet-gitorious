@@ -34,7 +34,6 @@ class gitorious::services {
     }
 
 	service {
-/*
 		"git-ultrasphinx":
 			ensure => running,
 			enable => true,
@@ -48,7 +47,6 @@ class gitorious::services {
 			hasstatus => true,
 			hasrestart => true,
 			require => File["/etc/init.d/git-daemon"];
-*/
 
 		'iptables':
 			ensure => stopped,
